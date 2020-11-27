@@ -6,11 +6,7 @@ let apiRoutes = require('./routes');
 
 let app = express();
 
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-
-app.use(bodyParser.json());
+app.use(bodyParser.json({type: 'application/json'}));
 
 const dbPath = 'mongodb://localhost/firstrest';
 const options = {useNewUrlParser: true, useUnifiedTopology: true};
@@ -34,7 +30,7 @@ const port = process.env.PORT || 8080;
 
 app.get('/', (req, res) => res.send('Welcome to Express'));
 
-app.use('/api', apiRoutes)
+app.use('/api', bodyParser.json(), apiRoutes)
 
 app.listen(port, () => {
     console.log('Running FirstRest on Port ' + port);
